@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tony Stewart — Portfolio</title>
+  <meta name="description" content="Tony Stewart — Football media professional. Portfolio showcasing projects, audio, video, skills and contact." />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- AOS for scroll animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent:#d71920; /* Arsenal red accent */
+      --bg:#0f1720;
+      --card:#0b1220;
+      --muted:#98a0aa;
+      --glass: rgba(255,255,255,0.04);
+      --max-width:1100px;
+    }
+    /* Light theme vars */
+    :root.light{
+      --bg:#f6f8fa; --card:#ffffff; --muted:#6b7280; --glass: rgba(11,21,30,0.03);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:var(--bg); color: #e6eef6; -webkit-font-smoothing:antialiased;
+      line-height:1.45; transition:background .25s,color .25s;
+    }
+
+    /* Container */
+    .wrap{max-width:var(--max-width);margin:40px auto;padding:0 24px}
+
+    /* NAV */
+    header.site-header{position:sticky;top:12px;z-index:60}
+    nav.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:14px;border-radius:12px;backdrop-filter: blur(6px);box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#ff7a7a);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:18px}
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+    .navlinks{display:flex;gap:14px;align-items:center}
+    .navlinks a{color:inherit;text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:600}
+    .navlinks a:hover{background:var(--glass)}
+
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:inherit;cursor:pointer;font-weight:600}
+    .btn.secondary{background:rgba(255,255,255,0.04)}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;margin:42px 0}
+    .intro h2{font-size:34px;margin:0 0 12px}
+    .intro p.lead{color:var(--muted);max-width:58ch}
+    .cta{margin-top:18px;display:flex;gap:12px}
+
+    /* Photo card */
+    .photo-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.6)}
+    .photo{width:100%;height:360px;border-radius:8px;background:url('assets/profile-placeholder.jpg') center/cover,no-repeat;display:block}
+
+    /* Skills & stats */
+    .skills{display:flex;gap:18px;margin-top:18px}
+    .skill{flex:1}
+    .skill h4{margin:0 0 8px;font-size:13px}
+    .bar{height:10px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden}
+    .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#ff8a8a);width:0;transition:width 1s}
+
+    /* Projects */
+    .projects{margin-top:36px}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+    .chip{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:transparent;cursor:pointer;font-weight:600}
+    .chip.active{background:var(--accent);color:#111;border-color:transparent}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);transition:transform .28s,box-shadow .28s}
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(2,6,23,0.8)}
+    .card h3{margin:0 0 8px}
+    .meta{font-size:13px;color:var(--muted);margin-bottom:12px}
+
+    .media{width:100%;height:180px;border-radius:8px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center}
+    video,iframe{width:100%;height:100%;display:block}
+
+    /* Project modal */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:120;visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s}
+    .modal.show{visibility:visible;opacity:1}
+    .modal-card{background:var(--card);max-width:980px;width:100%;border-radius:12px;padding:18px}
+
+    /* Experience/Education */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .timeline{list-style:none;padding:0;margin:0}
+    .timeline li{background:var(--card);padding:14px;border-radius:10px;margin-bottom:12px}
+
+    /* Contact */
+    form.contact{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    form.contact .full{grid-column:1/-1}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:inherit}
+    input::placeholder,textarea::placeholder{color:var(--muted)}
+
+    footer{margin:40px 0 80px;text-align:center;color:var(--muted)}
+
+    /* Responsive */
+    @media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr 350px}}
+    @media(max-width:720px){.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.navlinks{display:none}.wrap{padding:0 16px;margin:18px auto}}
+
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <header class="site-header" data-aos="fade-down">
+      <nav class="topbar">
+        <div class="brand">
+          <div class="logo">TS</div>
+          <div>
+            <h1>Tony Stewart</h1>
+            <p>Football Media • Content Creator • Analyst</p>
+          </div>
+        </div>
+
+        <div class="navlinks">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <div class="controls">
+          <button id="downloadCV" class="btn secondary">Download CV</button>
+          <button id="themeToggle" class="btn">Light</button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="about">
+      <div class="intro" data-aos="fade-right">
+        <h2>Hi — I’m Tony. I make football media that moves people.</h2>
+        <p class="lead">I’m a Football Business & Media student at UCFB Wembley, a content creator and analyst - specialising in broadcast-ready video, audio features and data-informed commentary. I combine storytelling with technical craft to produce media that engages fans and stakeholders.</p>
+
+        <div class="skills" aria-hidden>
+          <div class="skill">
+            <h4>Video Production</h4>
+            <div class="bar"><i style="width:92%"></i></div>
+          </div>
+          <div class="skill">
+            <h4>Audio Production</h4>
+            <div class="bar"><i style="width:88%"></i></div>
+          </div>
+          <div class="skill">
+            <h4>Data & Analysis</h4>
+            <div class="bar"><i style="width:76%"></i></div>
+          </div>
+        </div>
+
+        <div class="cta" data-aos="fade-up">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn secondary" href="#contact">Get In Touch</a>
+        </div>
+      </div>
+
+      <aside class="photo-card" data-aos="fade-left">
+  <div class="photo" role="img" aria-label="Tony Stewart profile photo" style="background-image:url('profile.png');background-size:cover;background-position:center;"></div>
+        <div style="display:flex;gap:12px;margin-top:12px;align-items:center;justify-content:space-between">
+          <div>
+            <strong>UCFB Wembley</strong>
+            <div class="meta">BA Football Business & Media (2022–2026)</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700;font-size:20px">TalkingBall</div>
+            <div class="meta">Founder & Lead Analyst</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+      <h2 data-aos="fade-up">Selected Projects</h2>
+
+      <div class="filters" data-aos="fade-up">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="video">Video</button>
+        <button class="chip" data-filter="audio">Audio</button>
+        <button class="chip" data-filter="writing">Writing</button>
+      </div>
+
+      <div class="grid" id="projectsGrid">
+        <!-- Project card 1 -->
+        <article class="card" data-type="video" data-aos="fade-up">
+          <h3>Banbury United On The Road (Smiv style)</h3>
+          <div class="meta">Documentary • Distinction at UAL Level 2 Diploma</div>
+          <div class="media">
+            <!-- Use your local mp4 filename inside the src attribute -->
+            <video controls preload="metadata">
+              <source src="banbury-united-on-the-road.mp4" type="video/mp4">
+              Your browser does not support embedded video.
+            </video>
+          </div>
+          <p style="margin-top:10px;color:var(--muted)">I created a 7-minute documentary-style video inspired by <em>On The Road</em> (Smiv), adapting the format for Banbury United FC. Responsibilities included filming, editing, narration, and capturing matchday atmosphere to engage fans across digital platforms. This project earned me a distinction at UAL Level 2 Diploma in Creative Media Production and Technology.</p>
+        </article>
+
+        <!-- Project card 2 -->
+        <article class="card" data-type="audio" data-aos="fade-up" data-aos-delay="80">
+          <h3>BBC Radio Stoke Appearance</h3>
+          <div class="meta">Live Radio • Sport at Six</div>
+          <div style="margin-bottom:10px">
+            <audio controls>
+              <source src="BBC Radio Stoke 22-09-2025.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <p style="color:var(--muted)">A 3 minute 40 second live call with Lucas Yeomans on <em>Sport at Six</em> discussing Arsenal’s upcoming Carabao Cup tie vs Port Vale.</p>
+        </article>
+
+        <!-- Project card 3 -->
+        <article class="card" data-type="writing" data-aos="fade-up" data-aos-delay="160">
+          <h3>Feature: The Voice of the Commentator</h3>
+          <div class="meta">Longread • Media analysis</div>
+          <div style="padding:10px 0;color:var(--muted)">A published long-form piece on commentator influence and fan perception. <a href="The Voice of the Commentator.pdf" target="_blank" style="color:var(--accent)">Read the full article (PDF)</a></div>
+        </article>
+
+        <!-- Add more project cards below as needed -->
+      </div>
+    </section>
+
+    <!-- EXPERIENCE & EDUCATION -->
+    <section id="experience" style="margin-top:36px" data-aos="fade-up">
+      <h2>Experience & Education</h2>
+
+      <div class="grid-2" style="margin-top:18px">
+        <div>
+          <h3 style="margin-top:0">Experience</h3>
+          <ul class="timeline">
+            <li>
+              <strong>Founder & Analyst — TalkingBall</strong>
+              <div class="meta">2020 — Present</div>
+              <p style="color:var(--muted)">Launched and grew a digital platform for Arsenal-focused analysis, producing written, audio and video content.</p>
+            </li>
+            <li>
+              <strong>Hospital Radio Producer - Radio Horton</strong>
+              <div class="meta">Nov 2019 — Mar 2020</div>
+              <p style="color:var(--muted)">Produced features and live content for hospital radio audiences.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="margin-top:0">Education</h3>
+          <ul class="timeline">
+            <li>
+              <strong>UCFB Wembley</strong>
+              <div class="meta">BA Football Business & Media (2022–2026)</div>
+              <p style="color:var(--muted)">Modules include Media Law & Ethics, Digital Futures, Football Brand Management.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="margin-top:36px" data-aos="fade-up">
+      <h2>Contact</h2>
+      <form class="contact" name="contact" method="POST" data-netlify="true">
+        <input name="name" placeholder="Your name" required />
+        <input name="email" placeholder="Your email" type="email" required />
+        <input name="subject" placeholder="Subject" class="full" />
+        <textarea name="message" rows="6" placeholder="Message" class="full" required></textarea>
+        <button class="btn" type="submit" style="grid-column:1/-1">Send message</button>
+      </form>
+      <p style="color:var(--muted);margin-top:12px">Or email: <a href="mailto:tmfstewart@gmail.com" style="color:var(--accent)">tmfstewart@gmail.com</a></p>
+    </section>
+
+    <footer>
+      <small>&copy; 2025 Tony Stewart • Built with care for employers</small>
+    </footer>
+  </div>
+
+  <!-- Modal (hidden by default) -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-card" id="modalCard"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Init AOS
+    AOS.init({duration:900, once:true, easing:'ease-in-out'});
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light');
+      themeToggle.textContent = document.documentElement.classList.contains('light') ? 'Dark' : 'Light';
+    });
+
+    // Download CV button (replace 'cv.pdf' with your actual CV file path)
+    document.getElementById('downloadCV').addEventListener('click', () => {
+      window.open('cv.pdf', '_blank');
+    });
+  </script>
+  
+</body>
+</html>
