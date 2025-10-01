@@ -265,21 +265,23 @@
     <section id="contact" style="margin-top:36px" data-aos="fade-up">
       <h2>Contact Me</h2>
       <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="thank-you.html">
-        <!-- Hidden field for Netlify spam protection -->
+        <!-- Hidden field for Netlify -->
         <input type="hidden" name="form-name" value="contact">
 
+        <!-- Honeypot field for spam -->
         <p style="display:none">
           <label>Don’t fill this out if you're human: <input name="bot-field"></label>
         </p>
 
+        <!-- User fields -->
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
 
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
 
         <label for="message">Message</label>
-        <textarea id="message" name="message" required></textarea>
+        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
 
         <button type="submit">Send</button>
       </form>
